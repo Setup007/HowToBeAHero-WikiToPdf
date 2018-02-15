@@ -14,6 +14,10 @@ var express = require('express');
 //var credentials = {key: privateKey, cert: certificate};
 var request = require("request");
 var app = express();
+//start up parsoid server
+const execFile = require('child_process').execFile;
+const child = execFile('startParsoid.cmd');
+
 
 app.get('/', function(req, res) {
     //request to Parsoid
