@@ -9,7 +9,7 @@ Run in project root
 npm install
 ```
 
-___Copy over the config.yaml from project root to .\node_modules\parsoid___
+___Copy over the `config.yaml` from project root to `.\node_modules\parsoid`___
 
 Running the Parsoid server:
 ```
@@ -18,6 +18,7 @@ node .\bin\server.js
 ```
 
 Running the Node.js Express server which will request HTML from the Parsoid server and handle the HTML-template creation:
+Open another command prompt in project root and execute:
 ```
 node index.js
 ```
