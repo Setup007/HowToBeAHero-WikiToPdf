@@ -22,7 +22,7 @@ Running the Node.js Express server which will request HTML from the Parsoid serv
 node index.js
 ```
 
-Requesting HTML of Wiki Page Titled "Kategorie:Begabungsgruppen" with Express via Browser (both servers (Parsoid/Express need to be running for that):
+Requesting HTML of Wiki Page Titled "Kategorie:Begabungsgruppen" with Express via Browser (both servers (Parsoid/Express) need to be running for that):
 ```
 http://localhost:3000/?title=Kategorie:Begabungsgruppen
 ```
