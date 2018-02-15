@@ -25,6 +25,7 @@ app.get('/', function(req, res) {
         //do the mapping here
         /*
             where the **MAGIC** happens
+            we might use jQuery(https://www.npmjs.com/package/jQuery) for easy mapping and DOM manipulation.
          */
         //TODO: run the html-pdf converter on mapped template
         //TODO: Spit out pdf file for download
