@@ -1,0 +1,31 @@
+{
+  "name": "howtobeahero-wikitopdf",
+  "version": "1.0.0",
+  "description": "This tool uses [Parasoid](https://www.mediawiki.org/wiki/Parsoid) to fetch specific pages of the [How to be a Hero](https://howtobeahero.de/index.php?title=Hauptseite) Wiki, put them in a nice HTML-template and generate a PDF via [html-pdf](https://www.npmjs.com/package/html-pdf) for a printable version.",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.16.2",
+    "html-pdf": "^2.2.0",
+    "parsoid": "^0.8.0",
+    "request": "^2.83.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Setup",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Setup007/HowToBeAHero-WikiToPdf.git"
+  },
+  "keywords": [
+    "pen",
+    "and",
+    "paper"
+  ],
+  "bugs": {
+    "url": "https://github.com/Setup007/HowToBeAHero-WikiToPdf/issues"
+  },
+  "homepage": "https://github.com/Setup007/HowToBeAHero-WikiToPdf#readme"
+}
