@@ -34,11 +34,11 @@
 
         .page {
             position: relative;
-            height: 100mm;
+            height: 297mm;
             width: 210mm;
             display: block;
             page-break-after: auto;
-            margin: 0px;
+            margin: 20px;
             overflow: hidden;
             background-color: #F5F5F5;
         }
@@ -46,10 +46,14 @@
         .logo {
             margin: auto;
             margin-top: 5mm;
-            width: 40mm;
+            width: 30mm;
         }
-
-
+            .content {
+                margin: auto;
+                margin-top: 10mm;
+                height: 120mm;
+                width: 100mm;
+            }
 
         .title {
             margin: auto;
@@ -63,10 +67,16 @@
             color: #EF902C;
         }
 
-
-
-
-
+            #logo-img {
+                margin-top: 10mm;
+                width: 30mm;
+            }
+            .footer {
+                position: relative;
+                margin: auto;
+                margin-top: 0mm;
+                text-align: center
+            }
         @media print {
             .page {
                 margin: 0;
@@ -86,7 +96,8 @@
                     }
 
             #logo-img {
-                width: 40mm;
+                margin-top: 10mm;
+                width: 30mm;
             }
             .content {
                 margin: auto;

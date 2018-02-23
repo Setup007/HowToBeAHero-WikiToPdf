@@ -9,7 +9,7 @@ var options = {
     base: 'file://' + path.resolve('./') + '/'
 };
 
-pdf.create(html, options).toFile('./Test3.pdf', function(err, res) {
+pdf.create(html, options).toFile('./Example-PDF.pdf', function(err, res) {
   if (err) return console.log(err);
   console.log(res); // { filename: '/app/businesscard.pdf' }
 });
