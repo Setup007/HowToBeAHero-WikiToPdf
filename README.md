@@ -11,14 +11,20 @@ npm install
 
 ___Copy over the `config.yaml` from project root to `.\node_modules\parsoid`___
 
+## If you are not on a Windows machine, start the parsoid server manually: ##
+```
+cd .\node_modules\parsoid
+node .\bin\server.js
+```
+
 Running the Node.js Express server which will request HTML from the Parsoid server and handle the HTML-Template creation:
 ```
 node index.js
 ```
 
-Requesting HTML of Wiki Page Titled "Kategorie:Begabungsgruppen" with Express via Browser (both servers (Parsoid/Express) need to be running for that):
+Requesting HTML of Wiki Pages titled "Begabungen", "Fähigkeiten", "Geistesblitzpunkte" and "Kategorie:Charaktererstellung" with Express via Browser (both servers (Parsoid/Express) need to be running for that):
 ```
-http://localhost:3000/?title=Kategorie:Begabungsgruppen
+http://localhost:3000/?title=Begabungen|F%C3%A4higkeiten|Geistesblitzpunkte|Kategorie:Charaktererstellung
 ```
 
 
