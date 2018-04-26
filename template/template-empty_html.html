@@ -3,6 +3,111 @@
     <link rel="stylesheet" href="../template/style.css">
     <link href="https://fonts.googleapis.com/css?family=Alegreya+SC:700|Open+Sans:400,700" rel="stylesheet">
     <meta charset="UTF-8">
+    <style>
+        * {
+            border: 1px solid black:
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 500;
+            font-size: 7pt;
+            -webkit-print-color-adjust: exact;
+            box-sizing: border-box;
+        }
+
+        }
+
+        h1 {
+            margin-top: 20pt;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        a {
+            color: #EF902C;
+            text-decoration: none;
+        }
+
+        .page {
+            position: relative;
+            height: 297mm;
+            width: 210mm;
+            display: block;
+            page-break-after: auto;
+            margin: 20px;
+            overflow: hidden;
+            background-color: #F5F5F5;
+        }
+
+        .logo {
+            margin: auto;
+            margin-top: 5mm;
+            width: 30mm;
+        }
+        .content {
+            margin: auto;
+            margin-top: 10mm;
+            height: 120mm;
+            width: 100mm;
+        }
+
+        .title {
+            margin: auto;
+            text-align: center;
+            margin-top: 5mm;
+            width: 150mm;
+            text-transform: lowercase;
+            letter-spacing: 4pt;
+            font-family: 'Alegreya SC', serif;
+            font-size: 24pt;
+            color: #EF902C;
+        }
+
+        #logo-img {
+            margin-top: 10mm;
+            width: 30mm;
+        }
+        .footer {
+            position: relative;
+            margin: auto;
+            margin-top: 0mm;
+            text-align: center
+        }
+        @media print {
+            .page {
+                margin: 0;
+                height: 100%;
+                width: 100%;
+            }
+
+            .footer {
+                position: relative;
+                margin: auto;
+                margin-top: 0mm;
+                text-align: center
+            }
+            #footer-img {
+                margin: auto;
+                width: 60mm;
+            }
+
+            #logo-img {
+                margin-top: 10mm;
+                width: 30mm;
+            }
+            .content {
+                margin: auto;
+                margin-top: 10mm;
+                height: 120mm;
+                width: 100mm;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- a new page for each h1 -->
