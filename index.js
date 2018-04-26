@@ -3,6 +3,9 @@
  * @description This is the main of the server, which will handle all parts of the communication and data processing.
  * Starting from a get Request from the browser, getting the Wiki HTML from Parsoid, embedding/mapping the Wiki HTML into a template,
  * running html-pdf to create a PDF and finally offering a download to the user.
+ *
+ * You can stack multiple parameters by splitting them with a | like so:
+ * http://localhost:3000/?title=Begabungen|F%C3%A4higkeiten|Geistesblitzpunkte|Kategorie:Charaktererstellung
  */
 var express = require('express');
 //TODO https
@@ -21,33 +24,62 @@ var jqueryPackage = require("jquery");
 const jsdom = require("jsdom");
 const {JSDOM} = jsdom;
 app.use("/template", express.static(__dirname + '/template'));
-app.get('/', function(req, res) {
-    //request to Parsoid
-    var requestURL = "http://localhost:8000/localhost/v3/page/html/" + encodeURIComponent(req.query.title) + "?" + "body_only=true";
-    request(requestURL, function(error, response, body) {
-        console.log(requestURL);
+var pagesPerTitle = [];
 
-        mapIntoTemplate(res, req, body);
+app.get('/', function(req, res) {
+    pagesPerTitle = [];
+    //request to Parsoid
+    var titles = req.query.title.split("|");
+    console.log(titles);
+    queryAllTitles(titles).then(function() {
+        console.log("done Querying, adding pages into our template now...");
+        var filledTemplate = addToTemplate(pagesPerTitle, titles);
+        filledTemplate.then(function(data){
+            // console.log("SENDING:"+data);
+            res.send(data);
+        });
+
     });
 
-
 });
-
 
 app.listen(3000, function() {
     console.log('Example app listening on port 3000!');
 });
 
+function queryAllTitles(titles) {
+    const promises = [];
+    for (var i = 0; i < titles.length; i++) {
+        promises.push(new Promise((resolve, reject) => {
+            const requestURL = "http://localhost:8000/localhost/v3/page/html/" + encodeURIComponent(titles[i]) + "?" + "body_only=true";
+            request(requestURL, function(error, response, body) {
+                if(!error) {
+                    console.log(requestURL);
+                    // console.log(error);
+                    // console.log(response);
+                    // console.log(body);
+                    pagesPerTitle.push(createPages(body));
+                    resolve(response);
+                }else{
+                    reject(error);
+                }
+            });
+         }));
+    }
+    return Promise.all(promises);
+};
+
+
+
 /**
  * Does the mapping into template to embed Parsoids raw html into our template by
- * 1. reading the parsoid html and creating pages based on h1 elements
- * 2. putting the page object array into the template
- * @param res
- * @param req
+ * reading the parsoid html and creating pages based on h1 elements
+ *
  * @param body
  */
-function mapIntoTemplate(res, req, body) {
+function createPages(body) {
     //parse the html and create a dom window for manipualtion via jquery
+    // console.log(body);
     var window = new JSDOM(body).window;
     // apply jquery to the window
     var $ = jqueryPackage(window);
@@ -78,36 +110,67 @@ function mapIntoTemplate(res, req, body) {
         }
 
     });
-    console.log('pages: ' + JSON.stringify(pages));
+    console.log('pages: ' + pages.length);
+    return pages;
+}
+
+/**
+ * Puts the page object array into the template
+ * @param pagesPerTitle
+ * @param titles
+ * @returns {boolean}
+ */
+
+function addToTemplate(pagesPerTitle, titles) {
     //read tempalteFile
-    fs.readFile('./template/template-empty_html.html', 'utf8', function(err, html) {
+    return new Promise((resolve, reject) => {
+        fs.readFile('./template/template-empty_html.html', 'utf8', function(err, html) {
 
         var templateWindow = new JSDOM(html).window;
         var $template = jqueryPackage(templateWindow);
-        //generate pages that equal to the length of the pages object array
-        for (var i = 0; i < pages.length - 1; i++) {
-            //find template, clone it, set id as page number and append to body
-            $template('#template').clone().prop('id', i + 2).appendTo('body');
+        console.log("reading template and iterating over: " + pagesPerTitle.length + " pages");
+        var overallPageCount =0 ;
+
+        //count the pages needed
+        for (var i = 0; i < pagesPerTitle.length; i++) {
+            console.log("title: "+ i + " pages:"+ pagesPerTitle[i].length);
+            overallPageCount += pagesPerTitle[i].length;
         }
-        //change template property to first page number
-        $template('#template').prop('id', 0);
 
-        //set all titles
-        $template('.title').each(function(index) {
-            // console.log('setting title: ' + req.query.title);
-            $template(this).text(req.query.title);
-        });
-        $template('.content').each(function(index, element) {
-            // console.log("setting content : " + index + "  with content: " + pages[index].pageContent);
-            $template(this).html(pages[index].pageContent);
-        });
-        //send mapped template to user
-        res.send(templateWindow.document.documentElement.outerHTML);
+        //generate pages that equal to the overall page count
+        for (var j = 0; j < overallPageCount; j++) {
+            console.log("cloning");
+            //find template, clone it, set id as page number and append to body
+            $template('#template').clone().prop('id', j).appendTo('body');
+        }
+        //remove template that was cloned from
+        $template('#template').remove();
 
+        console.log("Counted overall "+ overallPageCount+" Pages for "+ pagesPerTitle.length + " titles.");
+        for (var i = 0; i < pagesPerTitle.length; i++) {
+
+            //set all titles of these pages
+            for (var j = 0; j < pagesPerTitle[i].length; j++) {
+                var pageCount = i + j;
+                $template('#' + pageCount).children('.title').each(function(index) {
+                    console.log('setting title: ' + titles[i]);
+                    $template(this).text(titles[i]);
+                });
+            }
+            //set content of the pages
+            for (var j = 0; j < pagesPerTitle[i].length; j++) {
+                var pageCount = i + j;
+                $template('#' + pageCount).children('.content').html(pagesPerTitle[i][j] && pagesPerTitle[i][j].pageContent);
+
+            }
+        }
+        //return mapped template
+        resolve(templateWindow.document.documentElement.outerHTML);
         //TODO: run the html-pdf converter on mapped template
         //TODO: Spit out pdf file for download
         // res.sendFile('template/template-frame_html.html', {root: "./" })
     });
+});
 }
 
 //var httpServer = http.createServer(app);
