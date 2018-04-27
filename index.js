@@ -16,7 +16,7 @@ const options = {
     width: "210mm",
     height: "297mm",
     timeout: '50000',
-    base: 'file://' + path.resolve('./') + '/'
+    base: 'http://localhost:3000'
 };
 //var http = require('http');
 //var https = require('https');
