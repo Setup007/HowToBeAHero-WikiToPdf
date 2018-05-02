@@ -35,23 +35,29 @@ app.use("/template", express.static(__dirname + '/template'));
 let pagesPerTitle = [];
 
 app.get('/', function(req, res) {
+    let debug= req.query.debug;
     pagesPerTitle = [];
     //request to Parsoid
     let titles = req.query.title.split("|");
+
     console.log(titles);
     queryAllTitles(titles).then(function() {
         console.log("done Querying, adding pages into our template now...");
         let filledTemplate = addToTemplate(pagesPerTitle, titles);
         filledTemplate.then(function(data) {
             let pdfTitle = Date.now();
-            pdf.create(data, options).toFile("./html-pdf/"+pdfTitle+".pdf", function(err, response) {
-                if (err) return console.log(err);
-                console.log("SENDING PDF :"+"./html-pdf/"+pdfTitle+".pdf");
-                res.sendFile("./html-pdf/"+pdfTitle+".pdf", {root: "./"});
-            });
-            //uncomment these lines to send raw HTML
-            // console.log("SENDING:"+data);
-            // res.send(data);
+            if(!!debug) {
+                // console.log("SENDING:"+data);
+                res.send(data);
+            }else{
+                pdf.create(data, options).toFile("./html-pdf/"+pdfTitle+".pdf", function(err, response) {
+                    if (err) return console.log(err);
+                    console.log("SENDING PDF :"+"./html-pdf/"+pdfTitle+".pdf");
+                    res.sendFile("./html-pdf/"+pdfTitle+".pdf", {root: "./"});
+                });
+            }
+
+
         });
 
     });
