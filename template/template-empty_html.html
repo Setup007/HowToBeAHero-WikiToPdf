@@ -90,12 +90,17 @@
         }
 
         .footer {
-            position: relative;
-            margin: auto;
-            margin-top: 0mm;
-            text-align: center
+            /*position: relative;*/
+            /*margin: auto;*/
+            /*margin-top: 0mm;*/
+            position: absolute !important;
+            bottom: 3em !important;
+            text-align: center;
+            width: 100%;
         }
-
+        .mw-halign-right:not(.mw-default-size) a img{
+            margin-left: -7em;
+        }
         @media print {
             .page {
                 margin: 0;

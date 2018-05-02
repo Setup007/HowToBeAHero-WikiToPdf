@@ -161,7 +161,7 @@ function addToTemplate(pagesPerTitle, titles) {
 
                 console.log("Counted overall " + overallPageCount + " Pages for " + pagesPerTitle.length + " titles.");
                 for (let i = 0; i < pagesPerTitle.length; i++) {
-
+                    //TODO mapping required here, titles can be in different order than pages
                     //set all titles of these pages
                     for (let j = 0; j < pagesPerTitle[i].length; j++) {
                         let pageCount = i + j;
