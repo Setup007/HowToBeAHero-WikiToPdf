@@ -11,11 +11,13 @@ npm install
 
 ___Copy over the `config.yaml` from project root to `.\node_modules\parsoid`___
 
-### If you are not on a Windows machine, start the parsoid server manually: ###
+======
+### If you are *not* on a Windows machine, start the parsoid server manually: ###
 ```
 cd .\node_modules\parsoid
 node .\bin\server.js
 ```
+======
 
 Running the Node.js Express server which will request HTML from the Parsoid server and handle the HTML-Template creation:
 ```
