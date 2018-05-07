@@ -2,32 +2,22 @@
 
 This tool uses [Request](https://github.com/request/request) on [Parasoid](https://www.mediawiki.org/wiki/Parsoid) to fetch specific pages of the [How to be a Hero](https://howtobeahero.de/index.php?title=Hauptseite) Wiki, put them in a nice HTML-template and generate a PDF via [html-pdf](https://www.npmjs.com/package/html-pdf) for a printable version.
 
-## Installing the project ##
+## Requirements
 
-Run in project root
-```
-npm install
-```
+Ensure two executables can be found using the `path` environment variable:
 
-___Copy over the `config.yaml` from project root to `.\node_modules\parsoid`___
+* A python 2-installation
+* A `git` executable
 
-------
-### Ignore this section if you are on a Windows machine ###
-### If you are *not* on a Windows machine, start the parsoid server manually: ###
-```
-cd .\node_modules\parsoid
-node .\bin\server.js
-```
-------
+## Running the project
 
-Running the Node.js Express server which will request HTML from the Parsoid server and handle the HTML-Template creation:
-```
-node index.js
-```
+1. Open a command line inside your local copy of this repository
+2. Run `npm install`
+3. Copy over `/config.yaml` to `/node_modules/parsoid/config.yaml`
+4. (for non-Windows OS) Inside `/node_modules/parsoid` run `node ./bin/server.js`
+5. (for non-Windows OS inside a separate command line) Run `node index.js`
+6. You're now able to make web-requests to generate PDFs.
 
-Requesting HTML of Wiki Pages titled "Begabungen", "Fähigkeiten", "Geistesblitzpunkte" and "Kategorie:Charaktererstellung" with Express via Browser (both servers (Parsoid/Express) need to be running for that):
-```
-http://localhost:3000/?title=Begabungen|F%C3%A4higkeiten|Geistesblitzpunkte|Kategorie:Charaktererstellung
-```
-
-
+## Example
+To generate a PDF containing "Begabungen", "Fähigkeiten", "Geistesblitzpunkte" and "Kategorie:Charaktererstellung" visit `http://localhost:3000/?title=Begabungen|F%C3%A4higkeiten|Geistesblitzpunkte|Kategorie:Charaktererstellung
+`.
