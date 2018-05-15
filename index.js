@@ -35,7 +35,7 @@ app.use("/template", express.static(__dirname + '/template'));
 let pagesPerTitle = [];
 
 app.get('/', function(req, res) {
-    let debug= req.query.debug;
+    let debug = req.query.debug;
     pagesPerTitle = [];
     //request to Parsoid
     let titles = req.query.title.split("|");
@@ -46,14 +46,14 @@ app.get('/', function(req, res) {
         let filledTemplate = addToTemplate(pagesPerTitle, titles);
         filledTemplate.then(function(data) {
             let pdfTitle = Date.now();
-            if(!!debug) {
+            if (!!debug) {
                 // console.log("SENDING:"+data);
                 res.send(data);
-            }else{
-                pdf.create(data, options).toFile("./html-pdf/"+pdfTitle+".pdf", function(err, response) {
+            } else {
+                pdf.create(data, options).toFile("./html-pdf/" + pdfTitle + ".pdf", function(err, response) {
                     if (err) return console.log(err);
-                    console.log("SENDING PDF :"+"./html-pdf/"+pdfTitle+".pdf");
-                    res.sendFile("./html-pdf/"+pdfTitle+".pdf", {root: "./"});
+                    console.log("SENDING PDF :" + "./html-pdf/" + pdfTitle + ".pdf");
+                    res.sendFile("./html-pdf/" + pdfTitle + ".pdf", {root: "./"});
                 });
             }
 
@@ -72,14 +72,15 @@ function queryAllTitles(titles) {
     let promises = [];
     for (let i = 0; i < titles.length; i++) {
         promises.push(new Promise((resolve, reject) => {
-            const requestURL = "http://localhost:8000/localhost/v3/page/html/" + encodeURIComponent(titles[i]) + "?" + "body_only=true";
+            const requestURL = "http://localhost:8000/localhost/v3/page/html/" + encodeURIComponent(titles[i]) + "?" + "body_only=true&i=" + i;
             request(requestURL, function(error, response, body) {
                 if (!error) {
                     console.log(requestURL);
                     // console.log(error);
                     // console.log(response);
                     // console.log(body);
-                    pagesPerTitle.push(createPages(body));
+                    let titleNumber = requestURL.slice(-1);
+                    pagesPerTitle.push(createPages(body, titles[titleNumber]));
                     resolve(response);
                 } else {
                     reject(error);
@@ -97,7 +98,7 @@ function queryAllTitles(titles) {
  *
  * @param body
  */
-function createPages(body) {
+function createPages(body, title) {
     //parse the html and create a dom window for manipualtion via jquery
     // console.log(body);
     const window = new JSDOM(body).window;
@@ -112,7 +113,7 @@ function createPages(body) {
         //split pages on every h1 after the first one
         if ($(this).is('h1') && isFirstH1) {
             //finishPage
-            pages.push({page: pageCount, pageContent: contents});
+            pages.push({page: pageCount, pageContent: contents, pageTitle: title});
             contents = [];
             pageCount += 1;
         }
@@ -125,7 +126,7 @@ function createPages(body) {
         }
         //finish last page
         if (index === $('body > *').length - 1) {
-            pages.push({page: pageCount, pageContent: contents});
+            pages.push({page: pageCount, pageContent: contents, pageTitle: title});
         }
 
     });
@@ -166,21 +167,24 @@ function addToTemplate(pagesPerTitle, titles) {
                 $template('#template').remove();
 
                 console.log("Counted overall " + overallPageCount + " Pages for " + pagesPerTitle.length + " titles.");
-                for (let i = 0; i < pagesPerTitle.length; i++) {
-                    //TODO mapping required here, titles can be in different order than pages
-                    //set all titles of these pages
-                    for (let j = 0; j < pagesPerTitle[i].length; j++) {
-                        let pageCount = i + j;
-                        $template('#' + pageCount).children('.title').each(function() {
-                            console.log('setting title: ' + titles[i]);
-                            $template(this).text(titles[i]);
-                        });
-                    }
-                    //set content of the pages
-                    for (let j = 0; j < pagesPerTitle[i].length; j++) {
-                        let pageCount = i + j;
-                        $template('#' + pageCount).children('.content').html(pagesPerTitle[i][j] && pagesPerTitle[i][j].pageContent);
-
+                let pageCount = 0;
+                for (let x = 0; x < titles.length; x++) {
+                    let title = titles[x];
+                    console.log("ordering for title: "+title);
+                    for (let i = 0; i < pagesPerTitle.length; i++) {
+                        //set content and title of the pages
+                        for (let j = 0; j < pagesPerTitle[i].length; j++) {
+                            if(title!==pagesPerTitle[i][j].pageTitle){
+                                console.log("skipping: "+title+" !== "+pagesPerTitle[i][j].pageTitle);
+                                continue;
+                            }
+                            $template('#' + pageCount).children('.title').each(function() {
+                                console.log('setting title: ' + pagesPerTitle[i][j].pageTitle);
+                                $template(this).text(pagesPerTitle[i][j].pageTitle);
+                            });
+                            $template('#' + pageCount).children('.content').html(pagesPerTitle[i][j] && pagesPerTitle[i][j].pageContent);
+                            pageCount++;
+                        }
                     }
                 }
                 //return mapped template
