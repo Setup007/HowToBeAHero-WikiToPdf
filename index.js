@@ -153,13 +153,12 @@ function addToTemplate(pagesPerTitle, titles) {
 
                 //count the pages needed
                 for (let i = 0; i < pagesPerTitle.length; i++) {
-                    console.log("title: " + i + " pages:" + pagesPerTitle[i].length);
                     overallPageCount += pagesPerTitle[i].length;
                 }
 
                 //generate pages that equal to the overall page count
                 for (let j = 0; j < overallPageCount; j++) {
-                    console.log("cloning");
+                    console.log("cloning template");
                     //find template, clone it, set id as page number and append to body
                     $template('#template').clone().prop('id', j).appendTo('body');
                 }
@@ -170,7 +169,7 @@ function addToTemplate(pagesPerTitle, titles) {
                 let pageCount = 0;
                 for (let x = 0; x < titles.length; x++) {
                     let title = titles[x];
-                    console.log("ordering for title: "+title);
+                    console.log("ordering for title: " + title);
                     for (let i = 0; i < pagesPerTitle.length; i++) {
                         //set content and title of the pages
                         for (let j = 0; j < pagesPerTitle[i].length; j++) {
@@ -183,6 +182,29 @@ function addToTemplate(pagesPerTitle, titles) {
                                 $template(this).text(pagesPerTitle[i][j].pageTitle);
                             });
                             $template('#' + pageCount).children('.content').html(pagesPerTitle[i][j] && pagesPerTitle[i][j].pageContent);
+                            let contentElement = $template('#' + pageCount).children('.content').children();
+                            contentElement.each(function() {
+                                console.log("first part: " + $template('#' + pageCount).children('.content').outerHeight(true)  + " second: " +  $template(this).outerHeight(true));
+                                if ($template('#' + pageCount).children('.content').outerHeight(true) > $template(this).outerHeight(true)) {
+                                    // console.log("is outisde!"+$template(this).prop("id"));
+                                }
+                            });
+
+                            // for (let k = 0; k < contentElement.length; k++) {
+                            //     console.log("first part: " + $template('#' + pageCount).outerHeight(true)  + " second: " + contentElement[k].outerHeight(true));
+                            //     if ($template('#' + pageCount).children('.content').outerHeight(true) > $template(contentElement[k]).outerHeight(true)) {
+                            //
+                            //     }
+
+                                // if ($template(contentElement[k]).offset().top + $template(contentElement[k]).height() >
+                                //     $template(contentElement).offset().top + contentElement.height() ||
+                                //     $template(contentElement[k]).offset().left + $template(contentElement[k]).width() >
+                                //     $template(contentElement).offset().left + contentElement.width()) {
+                                //
+                                //     console.log("**************we should add pages here! title: " + title + " page: " + pageCount);
+                                // }
+
+                            // }
                             pageCount++;
                         }
                     }
