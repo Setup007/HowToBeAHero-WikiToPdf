@@ -32,6 +32,7 @@ const jqueryPackage = require("jquery");
 const jsDOM = require("jsdom");
 const {JSDOM} = jsDOM;
 app.use("/template", express.static(__dirname + '/template'));
+app.use("/js", express.static(__dirname + '/js'));
 let pagesPerTitle = [];
 
 app.get('/', function(req, res) {
@@ -63,6 +64,7 @@ app.get('/', function(req, res) {
     });
 
 });
+
 
 app.listen(3000, function() {
     console.log('Example app listening on port 3000!');
@@ -162,8 +164,8 @@ function addToTemplate(pagesPerTitle, titles) {
                     //find template, clone it, set id as page number and append to body
                     $template('#template').clone().prop('id', j).appendTo('body');
                 }
-                //remove template that was cloned from
-                $template('#template').remove();
+                //remove template that was cloned from (not yet is still needed for the frontendprocessing
+                // $template('#template').remove();
 
                 console.log("Counted overall " + overallPageCount + " Pages for " + pagesPerTitle.length + " titles.");
                 let pageCount = 0;
@@ -183,10 +185,11 @@ function addToTemplate(pagesPerTitle, titles) {
                             });
                             $template('#' + pageCount).children('.content').html(pagesPerTitle[i][j] && pagesPerTitle[i][j].pageContent);
                             let contentElement = $template('#' + pageCount).children('.content').children();
-                            contentElement.each(function() {
-                                console.log("first part: " + $template('#' + pageCount).children('.content').outerHeight(true)  + " second: " +  $template(this).outerHeight(true));
+                            contentElement.each(function(index, element) {
+                                // console.log("element: " + element + " and index: "+index);
+                                console.log("first part: " + $template('#' + pageCount).children('.content')[0].offsetWidth  + " second: " +  $template(this).outerHeight(true));
                                 if ($template('#' + pageCount).children('.content').outerHeight(true) > $template(this).outerHeight(true)) {
-                                    // console.log("is outisde!"+$template(this).prop("id"));
+                                    // console.log("is outside!"+$template(this).prop("id"));
                                 }
                             });
 
