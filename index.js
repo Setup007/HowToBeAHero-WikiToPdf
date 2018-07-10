@@ -1,11 +1,13 @@
 /**
  * @author Setup
- * @description This is the main of the server, which will handle all parts of the communication and data processing.
+ * @description This is the main part of the server, which will handle all parts of the communication and data processing.
  * Starting from a get Request from the browser, getting the Wiki HTML from Parsoid, embedding/mapping the Wiki HTML into a template,
- * running html-pdf to create a PDF and finally offering a download to the user.
+ * offering the template to the browser for rendering, splitting the overflowing content into extra pages (done by the script.js),
+ * receiving the new HTML from the browser (sending is done by the script.js),
+ * running html-pdf to create a PDF and FINALLY offering a download to the user.
  *
  * You can stack multiple parameters by splitting them with a | like so:
- * http://localhost:3000/?title=Begabungen|F%C3%A4higkeiten|Geistesblitzpunkte|Kategorie:Charaktererstellung
+ * http://localhost:3000/?title=Begabungen|F%C3%A4higkeiten|Geistesblitzpunkte|Kategorie:Charaktererstellung|Kampf|Begriffskl%C3%A4rung
  */
 const express = require('express');
 //TODO https
@@ -63,15 +65,16 @@ app.get('/', function(req, res) {
 
         }).catch((error) => {
             console.error(error)
-            // assert.isNotOk(error,'Promise error');
         });
 
     }).catch((error) => {
         console.error(error)
-        // assert.isNotOk(error,'Promise error');
     });
 
 });
+/**
+ * Accepts the rendered HTML with the split pages and generates a pdf
+ */
 app.post('/renderedHTML',function(req,res){
     let pdfTitle = Date.now();
     //html is in here: req.body
@@ -79,7 +82,6 @@ app.post('/renderedHTML',function(req,res){
     pdf.create(req.body.html , options).toFile("./html-pdf/" + pdfTitle + ".pdf", function(err, response) {
         if (err) return console.log(err);
         console.log("SENDING PDF :" + "./html-pdf/" + pdfTitle + ".pdf");
-        // res.sendFile("./html-pdf/" + pdfTitle + ".pdf", {root: "./"});
         res.status(200).send({title: pdfTitle});
     });
 });
@@ -183,11 +185,9 @@ function addToTemplate(pagesPerTitle, titles) {
                     //find template, clone it, set id as page number and append to body
                     $template('#template').clone().prop('id', j).appendTo('body');
                 }
-                //remove template that was cloned from (not yet is still needed for the frontendprocessing
-                // $template('#template').remove();
-
                 console.log("Counted overall " + overallPageCount + " Pages for " + pagesPerTitle.length + " titles.");
                 let pageCount = 0;
+                //reorder the titles
                 for (let x = 0; x < titles.length; x++) {
                     let title = titles[x];
                     console.log("ordering for title: " + title);
@@ -203,30 +203,6 @@ function addToTemplate(pagesPerTitle, titles) {
                                 $template(this).text(pagesPerTitle[i][j].pageTitle);
                             });
                             $template('#' + pageCount).children('.content').html(pagesPerTitle[i][j] && pagesPerTitle[i][j].pageContent);
-                            // let contentElement = $template('#' + pageCount).children('.content').children();
-                            // contentElement.each(function(index, element) {
-                            //     // console.log("element: " + element + " and index: "+index);
-                            //     console.log("first part: " + $template('#' + pageCount).children('.content')[0].offsetWidth  + " second: " +  $template(this).outerHeight(true));
-                            //     if ($template('#' + pageCount).children('.content').outerHeight(true) > $template(this).outerHeight(true)) {
-                            //         // console.log("is outside!"+$template(this).prop("id"));
-                            //     }
-                            // });
-
-                            // for (let k = 0; k < contentElement.length; k++) {
-                            //     console.log("first part: " + $template('#' + pageCount).outerHeight(true)  + " second: " + contentElement[k].outerHeight(true));
-                            //     if ($template('#' + pageCount).children('.content').outerHeight(true) > $template(contentElement[k]).outerHeight(true)) {
-                            //
-                            //     }
-
-                                // if ($template(contentElement[k]).offset().top + $template(contentElement[k]).height() >
-                                //     $template(contentElement).offset().top + contentElement.height() ||
-                                //     $template(contentElement[k]).offset().left + $template(contentElement[k]).width() >
-                                //     $template(contentElement).offset().left + contentElement.width()) {
-                                //
-                                //     console.log("**************we should add pages here! title: " + title + " page: " + pageCount);
-                                // }
-
-                            // }
                             pageCount++;
                         }
                     }
