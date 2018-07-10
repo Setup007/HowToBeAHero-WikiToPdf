@@ -40,7 +40,24 @@ $(window).on('load', function() {
         contentType:"application/json; charset=utf-8",
     });
     function createTableOfContents(){
-        // $('#template').clone().prop('id', "-1").insertAfter($('#' + splitContentId));
+        $('#template').clone().prop('id', "-1").insertBefore($('#0'));
+        $('#-1').find('.title').text("Inhaltsverzeichnis");
+        let maxPageCount= $('body').children().length-1; //-1 since table of contents should not count in
+        let titles=[];
+        for(let i=0; i< maxPageCount; i++){
+            let titleName= $('#'+i).find('.title').text();
+            if(titleName ===""){
+                continue;
+            }
+            let titlePage=  $('#'+i).find('.pageCount').text();
+            if(titles.indexOf(titleName)!==-1){
+                titleName= $('#'+i).find('.content').children().first().text();
+                $('#-1').find('.content').append('<div><span>-</span><span class="subtitleName">'+titleName+'</span><span class="titlePage">'+titlePage+'</span></div>');
+            }else{
+                $('#-1').find('.content').append('<div><span class="titleName">'+titleName+'</span><span class="titlePage">'+titlePage+'</span></div>');
+            }
+            titles.push(titleName);
+        }
     }
     function handleData(success) {
         //Create a link element, hide it, direct it towards the generated pdf, and then 'click' it programatically
@@ -95,3 +112,15 @@ $(window).on('load', function() {
         return "<html>" + $("html").html() + "</html>";
     }
 });
+jQuery.expr[':'].regex = function(elem, index, match) {
+    var matchParams = match[3].split(','),
+        validLabels = /^(data|css):/,
+        attr = {
+            method: matchParams[0].match(validLabels) ?
+                matchParams[0].split(':')[0] : 'attr',
+            property: matchParams.shift().replace(validLabels,'')
+        },
+        regexFlags = 'ig',
+        regex = new RegExp(matchParams.join('').replace(/^\s+|\s+$/g,''), regexFlags);
+    return regex.test(jQuery(elem)[attr.method](attr.property));
+};
