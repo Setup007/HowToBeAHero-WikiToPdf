@@ -33,6 +33,8 @@ const jsDOM = require("jsdom");
 const {JSDOM} = jsDOM;
 app.use("/template", express.static(__dirname + '/template'));
 app.use("/js", express.static(__dirname + '/js'));
+app.use('/html-pdf', express.static(__dirname + '/html-pdf'));
+app.use(express.json({limit: '50mb', extended: true}));       // to support JSON-encoded bodies
 let pagesPerTitle = [];
 
 app.get('/', function(req, res) {
@@ -47,22 +49,39 @@ app.get('/', function(req, res) {
         let filledTemplate = addToTemplate(pagesPerTitle, titles);
         filledTemplate.then(function(data) {
             let pdfTitle = Date.now();
-            if (!!debug) {
+            // if (!!debug) {
                 // console.log("SENDING:"+data);
                 res.send(data);
-            } else {
-                pdf.create(data, options).toFile("./html-pdf/" + pdfTitle + ".pdf", function(err, response) {
-                    if (err) return console.log(err);
-                    console.log("SENDING PDF :" + "./html-pdf/" + pdfTitle + ".pdf");
-                    res.sendFile("./html-pdf/" + pdfTitle + ".pdf", {root: "./"});
-                });
-            }
+            // } else {
+            //     pdf.create(data, options).toFile("./html-pdf/" + pdfTitle + ".pdf", function(err, response) {
+            //         if (err) return console.log(err);
+            //         console.log("SENDING PDF :" + "./html-pdf/" + pdfTitle + ".pdf");
+            //         res.sendFile("./html-pdf/" + pdfTitle + ".pdf", {root: "./"});
+            //     });
+            // }
 
 
+        }).catch((error) => {
+            console.error(error)
+            // assert.isNotOk(error,'Promise error');
         });
 
+    }).catch((error) => {
+        console.error(error)
+        // assert.isNotOk(error,'Promise error');
     });
 
+});
+app.post('/renderedHTML',function(req,res){
+    let pdfTitle = Date.now();
+    //html is in here: req.body
+    console.log(req.body.html);
+    pdf.create(req.body.html , options).toFile("./html-pdf/" + pdfTitle + ".pdf", function(err, response) {
+        if (err) return console.log(err);
+        console.log("SENDING PDF :" + "./html-pdf/" + pdfTitle + ".pdf");
+        // res.sendFile("./html-pdf/" + pdfTitle + ".pdf", {root: "./"});
+        res.status(200).send({title: pdfTitle});
+    });
 });
 
 
@@ -184,14 +203,14 @@ function addToTemplate(pagesPerTitle, titles) {
                                 $template(this).text(pagesPerTitle[i][j].pageTitle);
                             });
                             $template('#' + pageCount).children('.content').html(pagesPerTitle[i][j] && pagesPerTitle[i][j].pageContent);
-                            let contentElement = $template('#' + pageCount).children('.content').children();
-                            contentElement.each(function(index, element) {
-                                // console.log("element: " + element + " and index: "+index);
-                                console.log("first part: " + $template('#' + pageCount).children('.content')[0].offsetWidth  + " second: " +  $template(this).outerHeight(true));
-                                if ($template('#' + pageCount).children('.content').outerHeight(true) > $template(this).outerHeight(true)) {
-                                    // console.log("is outside!"+$template(this).prop("id"));
-                                }
-                            });
+                            // let contentElement = $template('#' + pageCount).children('.content').children();
+                            // contentElement.each(function(index, element) {
+                            //     // console.log("element: " + element + " and index: "+index);
+                            //     console.log("first part: " + $template('#' + pageCount).children('.content')[0].offsetWidth  + " second: " +  $template(this).outerHeight(true));
+                            //     if ($template('#' + pageCount).children('.content').outerHeight(true) > $template(this).outerHeight(true)) {
+                            //         // console.log("is outside!"+$template(this).prop("id"));
+                            //     }
+                            // });
 
                             // for (let k = 0; k < contentElement.length; k++) {
                             //     console.log("first part: " + $template('#' + pageCount).outerHeight(true)  + " second: " + contentElement[k].outerHeight(true));
