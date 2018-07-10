@@ -1,31 +1,162 @@
 <head>
+    <meta charset="utf8">
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css?family=Alegreya+SC:700|Open+Sans:400,700" rel="stylesheet">
+    <style>
+        * {
+            border: 1px solid
+            black:
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 500;
+            font-size: 7pt;
+            -webkit-print-color-adjust: exact;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            margin-top: 20pt;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        a {
+            color: #EF902C;
+            text-decoration: none;
+        }
+
+        .page {
+            position: relative;
+            height: 297mm;
+            width: 210mm;
+            display: block;
+            page-break-after: auto;
+            margin: 20px;
+            overflow: hidden;
+            background-color: #F5F5F5;
+        }
+
+        .logo {
+            margin: auto;
+            margin-top: 5mm;
+            width: 30mm;
+        }
+
+        .content {
+            margin: auto;
+            margin-top: 10mm;
+            height: 120mm;
+            width: 100mm;
+        }
+
+        .title {
+            margin: auto;
+            text-align: center;
+            margin-top: 5mm;
+            width: 150mm;
+            text-transform: lowercase;
+            letter-spacing: 4pt;
+            font-family: 'Alegreya SC', serif;
+            font-size: 24pt;
+            color: #EF902C;
+        }
+
+        #logo-img {
+            margin-top: 10mm;
+            width: 30mm;
+        }
+
+        .footer {
+            position: relative;
+            margin: auto;
+            margin-top: 0mm;
+            text-align: center
+        }
+
+        @media print {
+            .page {
+                margin: 0;
+                height: 100%;
+                width: 100%;
+            }
+
+            .footer {
+                position: relative;
+                margin: auto;
+                margin-top: 0mm;
+                text-align: center
+            }
+
+            #footer-img {
+                margin: auto;
+                width: 60mm;
+            }
+
+            #logo-img {
+                margin-top: 10mm;
+                width: 30mm;
+            }
+
+            .content {
+                margin: auto;
+                margin-top: 10mm;
+                height: 120mm;
+                width: 100mm;
+            }
+        }
+    </style>
 </head>
+
 <body>
-    <div class="page">
-        <div class="logo">
-            <img id="logo-img" src="images/wiki.png" alt="">
-        </div>
-        <div class="title">
-            <!--Title From Query Params goes here-->
-            Kategorie: Begabungsgruppen
-        </div>
-        <div class="content">
-            <!--Parsoid HTML goes here-->
-            <p data-parsoid='{"dsr":[0,105,0,0]}'>Jeder Charakter besitzt grundlegende Begabungen​. Diese unterteilen sich in drei <b data-parsoid='{"dsr":[81,103,3,3]}'>Begabungsgruppen</b>​:</p>
+<div class="page">
+    <div class="logo">
+        <img id="logo-img" src="../template/images/LogoHD_300dpi.png" alt="">
+    </div>
+    <div class="title">
+        <!--Title From Query Params goes here-->
+        Kategorie: Begabungsgruppen
+    </div>
+    <div class="content">
+        <!-- Parsoid HTML goes here-->
+        <p data-parsoid='{"dsr":[0,105,0,0]}'>Jeder Charakter besitzt grundlegende Begabungen​. Diese unterteilen sich
+            in drei <b data-parsoid='{"dsr":[81,103,3,3]}'>Begabungsgruppen</b>​:</p>
 
-            <ul data-parsoid='{"dsr":[107,152,0,0]}'><li data-parsoid='{"dsr":[107,120,1,0]}'> <a rel="mw:WikiLink" href="./Handeln" title="Handeln" data-parsoid='{"stx":"simple","a":{"href":"./Handeln"},"sa":{"href":"Handeln"},"dsr":[109,120,2,2]}'>Handeln</a></li>
-            <li data-parsoid='{"dsr":[121,133,1,0]}'> <a rel="mw:WikiLink" href="./Wissen" title="Wissen" data-parsoid='{"stx":"simple","a":{"href":"./Wissen"},"sa":{"href":"Wissen"},"dsr":[123,133,2,2]}'>Wissen</a></li>
-            <li data-parsoid='{"dsr":[134,152,1,0]}'> <a rel="mw:WikiLink" href="./Interagieren" title="Interagieren" data-parsoid='{"stx":"simple","a":{"href":"./Interagieren"},"sa":{"href":"Interagieren"},"dsr":[136,152,2,2]}'>Interagieren</a></li></ul>
+        <ul data-parsoid='{"dsr":[107,152,0,0]}'>
+            <li data-parsoid='{"dsr":[107,120,1,0]}'><a rel="mw:WikiLink" href="./Handeln" title="Handeln"
+                                                        data-parsoid='{"stx":"simple","a":{"href":"./Handeln"},"sa":{"href":"Handeln"},"dsr":[109,120,2,2]}'>Handeln</a>
+            </li>
+            <li data-parsoid='{"dsr":[121,133,1,0]}'><a rel="mw:WikiLink" href="./Wissen" title="Wissen"
+                                                        data-parsoid='{"stx":"simple","a":{"href":"./Wissen"},"sa":{"href":"Wissen"},"dsr":[123,133,2,2]}'>Wissen</a>
+            </li>
+            <li data-parsoid='{"dsr":[134,152,1,0]}'><a rel="mw:WikiLink" href="./Interagieren" title="Interagieren"
+                                                        data-parsoid='{"stx":"simple","a":{"href":"./Interagieren"},"sa":{"href":"Interagieren"},"dsr":[136,152,2,2]}'>Interagieren</a>
+            </li>
+        </ul>
 
-            <p data-parsoid='{"dsr":[154,529,0,0]}'>Innerhalb dieser Gruppen existieren Grundlegende Fähigkeiten die diesen logisch zugewiesen werden. So ist das Schneidern einer Weste unter <i data-parsoid='{"dsr":[293,304,2,2]}'>Handeln</i> zu verorten. Während das Erkennen einer englischen Designerweste eher unter <i data-parsoid='{"dsr":[381,391,2,2]}'>Wissen</i> zu suchen wäre. Möchte man jemanden davon überzeugen, dass die getragene Weste ganz besonders wertvoll ist, so wäre das <i data-parsoid='{"dsr":[512,528,2,2]}'>Interagieren</i>.</p>
+        <p data-parsoid='{"dsr":[154,529,0,0]}'>Innerhalb dieser Gruppen existieren Grundlegende Fähigkeiten die diesen
+            logisch zugewiesen werden. So ist das Schneidern einer Weste unter <i data-parsoid='{"dsr":[293,304,2,2]}'>Handeln</i>
+            zu verorten. Während das Erkennen einer englischen
+            Designerweste eher unter <i data-parsoid='{"dsr":[381,391,2,2]}'>Wissen</i> zu suchen wäre. Möchte man
+            jemanden davon überzeugen, dass die getragene Weste ganz besonders wertvoll ist, so wäre das <i
+                    data-parsoid='{"dsr":[512,528,2,2]}'>Interagieren</i>.</p>
 
-            <h1 id="Handeln" data-parsoid='{"dsr":[531,542,1,1]}'> Handeln </h1>
-            <p about="#mwt1" typeof="mw:Transclusion" data-parsoid='{"dsr":[543,555,0,0],"pi":[[]]}' data-mw='{"parts":[{"template":{"target":{"wt":":Handeln","href":"./Handeln"},"params":{},"i":0}}]}'>Die Begabungsgruppe <b>Handeln</b> umfast alle <a rel="mw:WikiLink" href="./Fähigkeiten" title="Fähigkeiten">Fähigkeiten</a>, die etwas aktiv tun. Folgend sind ein paar Beispiele aufgelistet:</p><span about="#mwt1">
+        <h1 id="Handeln" data-parsoid='{"dsr":[531,542,1,1]}'> Handeln </h1>
+        <p about="#mwt1" typeof="mw:Transclusion" data-parsoid='{"dsr":[543,555,0,0],"pi":[[]]}'
+           data-mw='{"parts":[{"template":{"target":{"wt":":Handeln","href":"./Handeln"},"params":{},"i":0}}]}'>Die
+            Begabungsgruppe <b>Handeln</b> umfast alle <a rel="mw:WikiLink" href="./Fähigkeiten" title="Fähigkeiten">Fähigkeiten</a>,
+            die etwas aktiv tun. Folgend sind ein paar Beispiele aufgelistet:</p><span about="#mwt1">
 
-            </span><h2 about="#mwt1" id="Beispiele"> Beispiele </h2><span about="#mwt1">
-            </span><ul about="#mwt1"><li> Rennen</li>
+            </span>
+        <h2 about="#mwt1" id="Beispiele"> Beispiele </h2><span about="#mwt1">
+            </span>
+        <ul about="#mwt1">
+            <li> Rennen</li>
             <li> Schlagen</li>
             <li> Treten</li>
             <li> Schießen</li>
@@ -34,29 +165,42 @@
             <li> Heben</li>
             <li> Tischlern</li>
             <li> Fischen</li>
-            <li> Verstecken</li></ul><span about="#mwt1">
+            <li> Verstecken</li>
+        </ul>
+        <span about="#mwt1">
 
-            </span><p about="#mwt1">Nennt eure Highlight-Fähigkeiten unter <a rel="mw:WikiLink" href="./Diskussion:Handeln" title="Diskussion:Handeln">Diskussion:Handeln</a>
-            <link rel="mw:PageProp/Category" href="./Kategorie:Begabungsgruppen"/></p>
+            </span>
+        <p about="#mwt1">Nennt eure Highlight-Fähigkeiten unter <a rel="mw:WikiLink" href="./Diskussion:Handeln"
+                                                                   title="Diskussion:Handeln">Diskussion:Handeln</a>
+            <link rel="mw:PageProp/Category" href="./Kategorie:Begabungsgruppen"/>
+        </p>
 
-        </div>
-
-        <div class="footer">
-            <img src="images/Footerimage.png" alt="" id="footer-img">
-        </div>
     </div>
 
-    <div class="page">
-        <div class="logo">
-            <img id="logo-img" src="images/wiki.png" alt="">
-        </div>
-        <div class="title">Kategorie: Begabungsgruppen</div>
-        <div class="content">
-            <h1 id="Wissen" data-parsoid='{"dsr":[557,567,1,1]}'> Wissen </h1>
-            <p about="#mwt2" typeof="mw:Transclusion" data-parsoid='{"dsr":[568,579,0,0],"pi":[[]]}' data-mw='{"parts":[{"template":{"target":{"wt":":Wissen","href":"./Wissen"},"params":{},"i":0}}]}'>Die Begabungsgruppe <b>Wissen</b> beschreibt alle <a rel="mw:WikiLink" href="./Fähigkeiten" title="Fähigkeiten">Fähigkeiten</a>, die sich um das Wissen um bestimmte Fachgebiete oder Sprachen dreht. Folgend sind ein paar Beispiele aufgelistet:</p><span about="#mwt2">
+    <div class="footer">
+        <img src="../template/images/Footerimage.png" alt="" id="footer-img">
+    </div>
+</div>
 
-            </span><h2 about="#mwt2" id="Beispiele_2"> Beispiele </h2><span about="#mwt2">
-            </span><ul about="#mwt2"><li> Deutsch</li>
+<div class="page">
+    <div class="logo">
+        <img id="logo-img" src="../template/images/LogoHD_300dpi.png" alt="">
+    </div>
+    <div class="title">Kategorie: Begabungsgruppen</div>
+    <div class="content">
+        <h1 id="Wissen" data-parsoid='{"dsr":[557,567,1,1]}'> Wissen </h1>
+        <p about="#mwt2" typeof="mw:Transclusion" data-parsoid='{"dsr":[568,579,0,0],"pi":[[]]}'
+           data-mw='{"parts":[{"template":{"target":{"wt":":Wissen","href":"./Wissen"},"params":{},"i":0}}]}'>Die
+            Begabungsgruppe <b>Wissen</b> beschreibt alle <a rel="mw:WikiLink" href="./Fähigkeiten" title="Fähigkeiten">Fähigkeiten</a>,
+            die sich um das Wissen um bestimmte Fachgebiete oder Sprachen dreht. Folgend sind ein paar Beispiele
+            aufgelistet:</p>
+        <span about="#mwt2">
+
+                </span>
+        <h2 about="#mwt2" id="Beispiele_2"> Beispiele </h2><span about="#mwt2">
+            </span>
+        <ul about="#mwt2">
+            <li> Deutsch</li>
             <li> Polnisch</li>
             <li> Modedesign</li>
             <li> Politik</li>
@@ -65,50 +209,70 @@
             <li> Literatur</li>
             <li> Fauna</li>
             <li> Flora</li>
-            <li> Latein</li></ul><span about="#mwt2">
+            <li> Latein</li>
+        </ul>
+        <span about="#mwt2">
 
-            </span><p about="#mwt2">Nennt eure Highlight-Fähigkeiten unter <a rel="mw:WikiLink" href="./Diskussion:Wissen" title="Diskussion:Wissen">Diskussion:Wissen</a>
-            <link rel="mw:PageProp/Category" href="./Kategorie:Begabungsgruppen"/></p>
+            </span>
+        <p about="#mwt2">Nennt eure Highlight-Fähigkeiten unter <a rel="mw:WikiLink" href="./Diskussion:Wissen"
+                                                                   title="Diskussion:Wissen">Diskussion:Wissen</a>
+            <link rel="mw:PageProp/Category" href="./Kategorie:Begabungsgruppen"/>
+        </p>
 
-            </div>
-
-        <div class="footer">
-            <img src="images/Footerimage.png" alt="" id="footer-img">
-        </div>
     </div>
+
+    <div class="footer">
+        <img src="../template/images/Footerimage.png" alt="" id="footer-img">
+    </div>
+</div>
 </body>
 
 <div class="page">
     <div class="logo">
-        <img id="logo-img" src="images/wiki.png" alt="">
+        <img id="logo-img" src="../template/images/LogoHD_300dpi.png" alt="">
     </div>
     <div class="title">Kategorie: Begabungsgruppen</div>
     <div class="content">
         <h1 id="Interagieren" data-parsoid='{"dsr":[581,597,1,1]}'> Interagieren </h1>
-        <p about="#mwt3" typeof="mw:Transclusion" data-parsoid='{"dsr":[598,840,0,0],"pi":[[]]}' data-mw='{"parts":[{"template":{"target":{"wt":":Interagieren","href":"./Interagieren"},"params":{},"i":0}},"\n&lt;!-- PAGE BREAK -->\nDiese Fähigkeiten werden auf dem Charakterbogen vermerkt und können in der Charaktererstellung vergeben werden. Hier unterteilen sie sich in &#39;&#39;grundlegende Fähigkeiten&#39;&#39; und &#39;&#39;herausragende Fähigkeiten&#39;&#39;."]}'>Die Begabungsgruppe <b>Interagieren</b> beschreibt alle <a rel="mw:WikiLink" href="./Fähigkeiten" title="Fähigkeiten">Fähigkeiten</a>, die sich um die Interaktion mit anderen Charakteren dreht. Folgend sind ein paar Beispiele aufgelistet:</p><span about="#mwt3">
-    
-        </span><h2 about="#mwt3" id="Beispiele_3"> Beispiele </h2><span about="#mwt3">
-        </span><ul about="#mwt3"><li> Feilschen</li>
-        <li> Lügen</li>
-        <li> Menschenkenntnis</li>
-        <li> Manipulieren</li>
-        <li> Betören</li>
-        <li> Beeindrucken</li>
-        <li> Unterhalten</li>
-        <li> Einschüchtern</li>
-        <li> Begeistern</li>
-        <li> Beruhigen</li></ul><span about="#mwt3">
+        <p about="#mwt3" typeof="mw:Transclusion" data-parsoid='{"dsr":[598,840,0,0],"pi":[[]]}'
+           data-mw='{"parts":[{"template":{"target":{"wt":":Interagieren","href":"./Interagieren"},"params":{},"i":0}},"\n&lt;!-- PAGE BREAK -->\nDiese Fähigkeiten werden auf dem Charakterbogen vermerkt und können in der Charaktererstellung vergeben werden. Hier unterteilen sie sich in &#39;&#39;grundlegende Fähigkeiten&#39;&#39; und &#39;&#39;herausragende Fähigkeiten&#39;&#39;."]}'>
+            Die Begabungsgruppe <b>Interagieren</b> beschreibt alle <a rel="mw:WikiLink" href="./Fähigkeiten"
+                                                                       title="Fähigkeiten">Fähigkeiten</a>, die sich um
+            die Interaktion mit anderen Charakteren dreht. Folgend sind ein paar Beispiele aufgelistet:</p>
+        <span about="#mwt3">
 
-        </span><p about="#mwt3">Nennt eure Highlight-Fähigkeiten unter <a rel="mw:WikiLink" href="./Diskussion:Interagieren" title="Diskussion:Interagieren">Diskussion:Interagieren</a>
-        <link rel="mw:PageProp/Category" href="./Kategorie:Begabungsgruppen"/>
-        <!-- PAGE BREAK -->
-        Diese Fähigkeiten werden auf dem Charakterbogen vermerkt und können in der Charaktererstellung vergeben werden. Hier unterteilen sie sich in <i>grundlegende Fähigkeiten</i> und <i>herausragende Fähigkeiten</i>.</p>
+            </span>
+        <h2 about="#mwt3" id="Beispiele_3"> Beispiele </h2><span about="#mwt3">
+        </span>
+        <ul about="#mwt3">
+            <li> Feilschen</li>
+            <li> Lügen</li>
+            <li> Menschenkenntnis</li>
+            <li> Manipulieren</li>
+            <li> Betören</li>
+            <li> Beeindrucken</li>
+            <li> Unterhalten</li>
+            <li> Einschüchtern</li>
+            <li> Begeistern</li>
+            <li> Beruhigen</li>
+        </ul>
+        <span about="#mwt3">
 
-        <link rel="mw:PageProp/Category" href="./Kategorie:Buch" data-parsoid='{"stx":"simple","a":{"href":"./Kategorie:Buch"},"sa":{"href":"Kategorie:Buch"},"dsr":[842,860,null,null]}'/>
+        </span>
+        <p about="#mwt3">Nennt eure Highlight-Fähigkeiten unter <a rel="mw:WikiLink" href="./Diskussion:Interagieren"
+                                                                   title="Diskussion:Interagieren">Diskussion:Interagieren</a>
+            <link rel="mw:PageProp/Category" href="./Kategorie:Begabungsgruppen"/>
+            <!-- PAGE BREAK -->
+            Diese Fähigkeiten werden auf dem Charakterbogen vermerkt und können in der Charaktererstellung vergeben
+            werden. Hier unterteilen sie sich in <i>grundlegende Fähigkeiten</i> und <i>herausragende Fähigkeiten</i>.
+        </p>
+
+        <link rel="mw:PageProp/Category" href="./Kategorie:Buch"
+              data-parsoid='{"stx":"simple","a":{"href":"./Kategorie:Buch"},"sa":{"href":"Kategorie:Buch"},"dsr":[842,860,null,null]}'/>
     </div>
 
     <div class="footer">
-        <img src="images/Footerimage.png" alt="" id="footer-img">
+        <img src="../template/images/Footerimage.png" alt="" id="footer-img">
     </div>
 </div>
 </body>

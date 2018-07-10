@@ -6,6 +6,8 @@
   "dependencies": {
     "express": "^4.16.2",
     "html-pdf": "^2.2.0",
+    "jquery": "^3.3.1",
+    "jsdom": "^11.6.2",
     "parsoid": "^0.8.0",
     "request": "^2.83.0"
   },
@@ -22,7 +24,15 @@
   "keywords": [
     "pen",
     "and",
-    "paper"
+    "paper",
+    "how",
+    "to",
+    "be",
+    "a",
+    "hero",
+    "howtobeahero",
+    "rocketbeanstv",
+    "rocketbeans"
   ],
   "bugs": {
     "url": "https://github.com/Setup007/HowToBeAHero-WikiToPdf/issues"
