@@ -15,10 +15,11 @@ $(window).on('load', function() {
     let splitPartCount = 0;
     let pageCount =1;
     for (let i = 0; i < lastId + 1; i++) {
+        let pageId = i;
         //set page count
         $('#'+pageId).find('.pageCount').text(pageCount);
 
-        let pageId = i;
+
         splitPartCount = 0;
         //go through every page and grab content element and its children
         let contentElements = $('#' + i).children('.content').children();
@@ -27,6 +28,7 @@ $(window).on('load', function() {
         splitContent(pageId, element, contentElements);
         pageCount++;
     }
+    createTableOfContents();
     //remove template
     $('#template').remove();
     //send *new* HTML back to server to generate a pdf
@@ -37,6 +39,9 @@ $(window).on('load', function() {
         success: handleData,
         contentType:"application/json; charset=utf-8",
     });
+    function createTableOfContents(){
+        // $('#template').clone().prop('id', "-1").insertAfter($('#' + splitContentId));
+    }
     function handleData(success) {
         //Create a link element, hide it, direct it towards the generated pdf, and then 'click' it programatically
         let a = document.createElement("a");
