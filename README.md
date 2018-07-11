@@ -14,10 +14,8 @@ Ensure two executables can be found using the `path` environment variable:
 1. Open a command line inside your local copy of this repository
 2. Run `npm install`
 3. Copy over `/config.yaml` to `/node_modules/parsoid/config.yaml`
-4. (for non-Windows OS) Inside `/node_modules/parsoid` run `node ./bin/server.js`
-5. (for non-Windows OS inside a separate command line) Run `node index.js`
-6. You're now able to make web-requests to generate PDFs.
+4. Run `node index.js`
+5. You're now able to make web-requests to generate PDFs.
 
 ## Example
-To generate a PDF containing "Begabungen", "Fähigkeiten", "Geistesblitzpunkte" and "Kategorie:Charaktererstellung" visit `http://localhost:3000/?title=Begabungen|F%C3%A4higkeiten|Geistesblitzpunkte|Kategorie:Charaktererstellung
-`.
+To generate a PDF containing "Begabungen", "Fähigkeiten", "Geistesblitzpunkte" and "Kategorie:Charaktererstellung" visit `http://localhost:3000/?title=Begabungen|F%C3%A4higkeiten|Geistesblitzpunkte|Kategorie:Charaktererstellung`.
