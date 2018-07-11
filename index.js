@@ -28,8 +28,34 @@ const options = {
 const request = require("request");
 const app = express();
 //start up parsoid server
-const execFile = require('child_process').execFile;
-const child = execFile('startParsoid.cmd');
+
+const childProcess = require('child_process');
+const parsoidProcess = childProcess.fork("./bin/server.js",
+    {
+        "cwd": "./node_modules/parsoid"
+    }
+);
+// listen for errors as they may prevent the exit event from firing
+parsoidProcess.on('error', function (err)
+{
+    console.error("Error running parsoid subscript:");
+    console.error(err);
+});
+
+// execute the callback once the process has finished running
+parsoidProcess.on('exit', function (exitCode)
+{
+    if (exitCode > 0)
+    {
+        console.error("parsoid subscript exited with error code %d - ensure all processes are terminated gracefully", exitCode);
+        process.exit(exitCode);
+    }
+    else
+    {
+        console.log("parsoid subscript exited successfully");
+    }
+});
+
 const jqueryPackage = require("jquery");
 const jsDOM = require("jsdom");
 const {JSDOM} = jsDOM;
