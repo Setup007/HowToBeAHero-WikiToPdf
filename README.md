@@ -19,4 +19,5 @@ Ensure two executables can be found using the `path` environment variable:
 
 ## Example
 To generate a PDF containing "Begabungen", "Fähigkeiten", "Geistesblitzpunkte" and "Kategorie:Charaktererstellung" visit `http://localhost:3000/?title=Begabungen|F%C3%A4higkeiten|Geistesblitzpunkte|Kategorie:Charaktererstellung`.
+
 To generate the same PDF without a table of contents add `&tableofcontents=false` like so: `http://localhost:3000/?title=Begabungen|F%C3%A4higkeiten|Geistesblitzpunkte|Kategorie:Charaktererstellung&tableofcontents=false`.
