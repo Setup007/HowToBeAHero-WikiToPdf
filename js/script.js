@@ -69,6 +69,45 @@ $(window).on('load', function() {
         //programatically click the link to trigger the download
         a.click();
     };
+
+    function splitTable(table, maxHeight) {
+        table = $(table);
+        let splitIndices = [0];
+        let rows = table.children("tbody").children();
+        let currHeight = 0;
+        rows.each(function(i, row) {
+            currHeight += $(rows[i]).outerHeight();
+            if (currHeight > maxHeight) {
+                splitIndices.push(i);
+                currHeight = $(rows[i]).outerHeight();
+            }
+        });
+        let multisplit = false;
+        splitIndices.push(undefined);
+        if (!!table.attr('id') && table.attr('id').includes('splittable')) {
+            table = table.replaceWith('<div id="split_table_indicator' + table.attr('id') + '"></div>');
+            multisplit = true;
+        } else {
+            table = table.replaceWith('<div id="split_table_indicator"></div>');
+        }
+        table.empty();
+        for (let i = 0; i < splitIndices.length - 1; i++) {
+            let newTable = table.clone();
+            $('<tbody />').appendTo(newTable);
+            rows.slice(splitIndices[i], splitIndices[i + 1]).appendTo(newTable.children('tbody'));
+            newTable.attr('id', 'splittable' + i);
+            if ($("#splittable" + (i - 1)).length > 0) {
+                newTable.insertAfter("#splittable" + (i - 1));
+            } else {
+                if (multisplit) {
+                    newTable.insertAfter('#split_table_indicator' + table.attr('id'));
+                } else {
+                    newTable.insertAfter('#split_table_indicator');
+                }
+            }
+        }
+    }
+
     function splitContent(pageNumber, element, contentElements) {
         //iterate over each child of the content div
         for (let j = 0; j < contentElements.length; j++) {
@@ -91,6 +130,10 @@ $(window).on('load', function() {
                     $('#' + splitContentId).children('.content').first().html($(element).children().slice(1));
                 } else {
                     let position = j;
+                    //if this element is a table, split the table
+                    if (contentElements[j].nodeName === "TABLE") {
+                        splitTable(contentElements[j], 500);
+                    }
                     //if the second to last element is a h2 or h3 or h4 move it to next page as well (to group headings with overflowing content)
                     if (contentElements.length > j - 2 && j >= 2) {
                         if (contentElements[j - 2].tagName.toLowerCase() === "h2" || contentElements[j - 2].tagName.toLowerCase() === "h3" || contentElements[j - 2].tagName.toLowerCase() === "h4") {
