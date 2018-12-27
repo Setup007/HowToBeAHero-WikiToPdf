@@ -28,7 +28,9 @@ $(window).on('load', function() {
         splitContent(pageId, element, contentElements);
         pageCount++;
     }
-    createTableOfContents();
+    if (getUrlParameter('tableofcontents') !== 'false') {
+        createTableOfContents();
+    }
     //remove template
     $('#template').remove();
     //send *new* HTML back to server to generate a pdf
@@ -132,7 +134,7 @@ $(window).on('load', function() {
                     let position = j;
                     //if this element is a table, split the table
                     if (contentElements[j].nodeName === "TABLE") {
-                        splitTable(contentElements[j], 500);
+                        splitTable(contentElements[j], 400);
                     }
                     //if the second to last element is a h2 or h3 or h4 move it to next page as well (to group headings with overflowing content)
                     if (contentElements.length > j - 2 && j >= 2) {
@@ -154,6 +156,12 @@ $(window).on('load', function() {
     function getPageHTML() {
         return "<html>" + $("html").html() + "</html>";
     }
+    function getUrlParameter(name) {
+        name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+        var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+        var results = regex.exec(location.search);
+        return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+    };
 });
 jQuery.expr[':'].regex = function(elem, index, match) {
     var matchParams = match[3].split(','),
